@@ -3,6 +3,7 @@ package com.ste9206.beerapplication.activity;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -119,16 +120,19 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void loadFirstFragment() {
-        FragmentManager manager = getSupportFragmentManager();
 
-        manager.beginTransaction().replace(R.id.contentMain, new BeerFragment()).commit();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right);
+        transaction.replace(R.id.contentMain, new BeerFragment()).commit();
+        toolbar.setTitle("Beers");
     }
 
     @Override
     public void loadFavouriteFragment()
     {
-        FragmentManager manager = getSupportFragmentManager();
-
-        manager.beginTransaction().replace(R.id.contentMain, new FavouriteFragment()).commit();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right);
+        transaction.replace(R.id.contentMain, new FavouriteFragment()).commit();
+        toolbar.setTitle("Favourite Beers");
     }
 }

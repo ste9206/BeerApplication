@@ -92,7 +92,7 @@ public class BeerPresenter implements BeerContract.Presenter, OnBeerCompletedLis
 
     @Override
     public void onError(Throwable e) {
-        System.out.println(e.getMessage());
+        view.showError(e.getMessage());
     }
 
 }

@@ -1,0 +1,69 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.ste9206.beerapplication.fragment.description.DescriptionFragment">
+
+
+   <ImageView
+       android:layout_width="48dp"
+       android:layout_height="48dp"
+       android:clickable="true"
+       android:layout_marginRight="16dp"
+       android:layout_marginEnd="16dp"
+       android:tint="#F12345"
+       android:id="@+id/favoriteBorder"
+       android:onClick="favoriteBorder"
+       android:src="@drawable/ic_favorite_border_black_48dp"
+       android:layout_alignTop="@+id/favorite"
+       android:layout_alignStart="@+id/favorite" />
+
+   <ImageView
+       android:layout_width="48dp"
+       android:layout_height="48dp"
+       android:clickable="true"
+       android:visibility="invisible"
+       android:onClick="favorite"
+       android:tint="#F12345"
+       android:id="@+id/favorite"
+       android:src="@drawable/ic_favorite_black_48dp"
+       android:layout_marginEnd="31dp"
+       android:layout_marginTop="34dp"
+       android:layout_alignParentTop="true"
+       android:layout_alignParentEnd="true" />
+
+   <ImageView
+       android:id="@+id/picture"
+       android:layout_width="256dp"
+       android:layout_height="192dp"
+       android:layout_marginLeft="16dp"
+
+       android:layout_alignTop="@+id/favoriteBorder"
+       android:layout_toStartOf="@+id/favoriteBorder"
+       android:layout_marginEnd="15dp" />
+
+   <android.support.v7.widget.CardView
+    android:id="@+id/card"
+    android:layout_below="@+id/picture"
+    android:layout_width="match_parent"
+    android:layout_marginTop="24dp"
+    android:layout_marginLeft="12dp"
+    android:layout_marginRight="12dp"
+    android:layout_marginBottom="60dp"
+    android:layout_height="match_parent">
+
+      <ScrollView android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:scrollbars="vertical">
+<TextView
+    style="@style/textViewStyle"
+    android:layout_margin="12dp"
+    android:gravity="center"
+    android:id="@+id/description"
+    android:textAlignment="center"
+    />
+</ScrollView>
+   </android.support.v7.widget.CardView>
+
+</RelativeLayout>

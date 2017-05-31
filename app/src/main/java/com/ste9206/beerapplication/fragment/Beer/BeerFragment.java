@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -21,6 +22,7 @@ import com.ste9206.beerapplication.listener.OnBackPressedListener;
 import com.ste9206.beerapplication.listener.OnItemClickedListener;
 import com.ste9206.beerapplication.models.Beer;
 import com.ste9206.beerapplication.realm.BeerItems;
+import com.ste9206.beerapplication.utils.AlertMessage;
 
 import javax.inject.Inject;
 
@@ -97,7 +99,7 @@ public class BeerFragment extends Fragment implements BeerContract.View, OnItemC
 
     @Override
     public void showError(String message) {
-
+        AlertMessage.newAlertErrorMessage(message,context).show();
     }
 
     @Override
@@ -110,7 +112,9 @@ public class BeerFragment extends Fragment implements BeerContract.View, OnItemC
     public void openDescriptionFragment(Bundle bundle) {
         Fragment fragment = new DescriptionFragment();
         fragment.setArguments(bundle);
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.contentMain,fragment).commit();
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right);
+        transaction.replace(R.id.contentMain,fragment).commit();
     }
 
     @Override
