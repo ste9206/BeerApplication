@@ -4,6 +4,7 @@ import dagger.Module;
 import dagger.Provides;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import io.realm.rx.RealmObservableFactory;
 
 /**
  * Created by stefano on 29/05/17.
@@ -12,8 +13,13 @@ import io.realm.RealmConfiguration;
 public class RealmModule {
 
     @Provides
-    public RealmConfiguration provideRealmConfiguration(){
-        return new RealmConfiguration.Builder().deleteRealmIfMigrationNeeded().build();
+    public RealmObservableFactory provideRealmObservableFactory(){
+        return new RealmObservableFactory();
+    }
+
+    @Provides
+    public RealmConfiguration provideRealmConfiguration(RealmObservableFactory realmObservableFactory){
+        return new RealmConfiguration.Builder().deleteRealmIfMigrationNeeded().rxFactory(provideRealmObservableFactory()).build();
     }
 
     @Provides

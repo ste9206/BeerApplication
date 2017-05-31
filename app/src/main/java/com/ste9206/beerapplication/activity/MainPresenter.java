@@ -33,4 +33,14 @@ public class MainPresenter implements MainContract.Presenter {
     public void onDestroy() {
       view = null;
     }
+
+    @Override
+    public void loadFavouriteBeers() {
+        view.loadFavouriteFragment();
+    }
+
+    @Override
+    public void loadBeers() {
+      loadFragment();
+    }
 }

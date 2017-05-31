@@ -12,6 +12,8 @@ import com.ste9206.beerapplication.dagger.modules.AppModule;
 import com.ste9206.beerapplication.dagger.modules.RealmModule;
 import com.ste9206.beerapplication.dagger.modules.RetrofitModule;
 
+import io.realm.Realm;
+
 /**
  * Created by stefano on 29/05/17.
  */
@@ -23,6 +25,7 @@ public class BeerApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
+        Realm.init(this);
         createAppComponent();
     }
 

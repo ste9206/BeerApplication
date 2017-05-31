@@ -11,10 +11,15 @@ public interface MainContract {
 
     interface Presenter extends BasePresenter{
 
+        void loadFavouriteBeers();
+
+        void loadBeers();
     }
 
     interface View extends BaseView {
 
         void loadFirstFragment();
+
+        void loadFavouriteFragment();
     }
 }

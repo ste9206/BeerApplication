@@ -1,18 +1,14 @@
-package com.ste9206.beerapplication.fragment;
+package com.ste9206.beerapplication.fragment.Beer;
 
-import com.ste9206.beerapplication.models.Beer;
+import com.ste9206.beerapplication.listener.OnBeerCompletedListener;
 import com.ste9206.beerapplication.service.APIService;
 import com.ste9206.beerapplication.utils.Constants;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
-import io.reactivex.Flowable;
-import io.reactivex.Scheduler;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by stefano on 29/05/17.
@@ -27,23 +23,19 @@ public class OnlineBeerService implements BeerContract.OnlineService {
         this.retrofit = retrofit;
     }
 
-    public void getAllBeers() {
+    @Override
+    public void getAllBeers(OnBeerCompletedListener listener) {
+
         APIService service = retrofit.create(APIService.class);
 
                 service.getAllBeers(Constants.APIKEY,Constants.FORMAT,Constants.STYLEID)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
-                .subscribe( b -> ok(b), Throwable::printStackTrace  );
+                .subscribe( b -> listener.onBeerCompleted(b), throwable -> listener.onBeerError(throwable) );
 
     }
 
-    private void ok(Beer beer) {
-
-
-        beer.data.forEach(s->System.out.println(s.getName()));
-
-    }
 
 
 }

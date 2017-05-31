@@ -13,7 +13,9 @@ import android.view.MenuItem;
 
 import com.ste9206.beerapplication.application.BeerApplication;
 import com.ste9206.beerapplication.R;
-import com.ste9206.beerapplication.fragment.BeerFragment;
+import com.ste9206.beerapplication.fragment.Beer.BeerFragment;
+import com.ste9206.beerapplication.fragment.favourites.FavouriteFragment;
+import com.ste9206.beerapplication.listener.OnBackPressedListener;
 
 import javax.inject.Inject;
 
@@ -34,6 +36,8 @@ public class MainActivity extends AppCompatActivity
 
     @BindView(R.id.nav_view)
     NavigationView navigationView;
+
+    OnBackPressedListener onBackPressListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +70,11 @@ public class MainActivity extends AppCompatActivity
         presenter.setView(this);
     }
 
+    public void setOnBackPressListener(OnBackPressedListener onBackPressListener) {
+        this.onBackPressListener = onBackPressListener;
+    }
+
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -74,34 +83,19 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
+
+        if (drawer.isDrawerOpen(GravityCompat.START))
+        {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
         }
 
-        return super.onOptionsItemSelected(item);
+        if(onBackPressListener != null)
+        {
+           onBackPressListener.onBackPress();
+        }
+
     }
+
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -109,18 +103,14 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.beers)
+        {
+          presenter.loadBeers();
+        }
 
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        else if (id == R.id.favouriteBeers)
+        {
+          presenter.loadFavouriteBeers();
         }
 
         drawer.closeDrawer(GravityCompat.START);
@@ -132,5 +122,13 @@ public class MainActivity extends AppCompatActivity
         FragmentManager manager = getSupportFragmentManager();
 
         manager.beginTransaction().replace(R.id.contentMain, new BeerFragment()).commit();
+    }
+
+    @Override
+    public void loadFavouriteFragment()
+    {
+        FragmentManager manager = getSupportFragmentManager();
+
+        manager.beginTransaction().replace(R.id.contentMain, new FavouriteFragment()).commit();
     }
 }
